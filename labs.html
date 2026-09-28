@@ -1,13 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
     <!--
-    태그 방식
-    -->
+    덧셈 계산기 만들어보기-->
+    <input type="text" id="num1" size="5">
+    <button> +</button>
+    <input type="text" id="num2" size="5">
+    <button onclick="calculate()">=</button>
+    <input id="result" readonly>
+
+    <p> </p>
+
+    <hr />
+    <!--
+    <div id="div1" onclick="changeText()">
+        Hello
+    </div>
+-->
 </body>
+
 </html>
+
+<script>
+    function changeText() {
+        document.getElementById("div1").innerHTML = "<h1>Hello world </h1>";
+    }
+
+    function calculate() {
+        const num1 = document.querySelector("#num1").value;
+        const num2 = document.querySelector("#num2").value;
+        const result = Number(num1) + Number(num2);
+        document.querySelector("#result").value = result;
+    }
+</script>
