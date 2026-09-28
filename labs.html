@@ -13,7 +13,10 @@
             background-color: antiquewhite;
         }
 
+        #Delete{
 
+            background-color: red;
+        }
     </style>
 </head>
 
@@ -47,13 +50,37 @@ chilk event 만들어보기
 
     <hr>
 
-    
+
     <!--
 동적 요소 추가-->
 
     <h3> 동적요소 추가</h3>
     <button id="addbtn">동적 요소 추가</button>
     <div id="container"></div>
+
+
+    <!--
+    삭제 추가 -->
+
+    <hr>
+    <h3>
+        요소 삭제
+    </h3>
+    <div id="list">
+        <p id=item1>포도</p>
+        <p id=item2>사과</p>
+        <p id=item3>오렌지</p>
+    </div>
+
+    <button id="Delete"> 삭제</button>
+    <script>
+        const item = document.getElementById("#item2");
+        const button= document.getElementById("Delete");
+
+        button.addEventListener("click",function(){
+            item.remove();
+        });
+    </script>
 </body>
 
 </html>
@@ -89,5 +116,5 @@ chilk event 만들어보기
         newDiv.textContent = "요소 추가";
         container.appendChild(newDiv);
     });
-    
+
 </script>
