@@ -5,6 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+
+    <style>
+        #container {
+            width: 200px;
+            height: 200px;
+            background-color: antiquewhite;
+        }
+
+
+    </style>
 </head>
 
 <body>
@@ -29,16 +39,21 @@
 chilk event 만들어보기
 -->
 
+    <h3> Cilck event</h3>
+    <button id="Cilck1"> 눌러보세용(alert)</button>
+    <button id="Cilck2"> 눌러보세용(innerText)</button>
+    <button id="Cilck3"> 눌러보세용(innerHTML)</button>
+    <p id="text"></p>
 
-<h3> Cilck event</h3>
-<button id="Cilck1"> 눌러보세용(alert)</button>
-<button id="Cilck2"> 눌러보세용(innerText)</button>
-<button id="Cilck3"> 눌러보세용(innerHTML)</button>
-<p id="text"></p>
+    <hr>
 
+    
+    <!--
+동적 요소 추가-->
 
-
-
+    <h3> 동적요소 추가</h3>
+    <button id="addbtn">동적 요소 추가</button>
+    <div id="container"></div>
 </body>
 
 </html>
@@ -55,7 +70,24 @@ chilk event 만들어보기
         document.querySelector("#result").value = result;
     }
     document.getElementById("Cilck1").addEventListener("click", function () {
-        alert("하이");
+        alert("alert 완료");
+    });
+    document.getElementById("Cilck2").addEventListener("click", function () {
+        document.getElementById("text").innerText = "innerText 완료";
+    });
+    document.getElementById("Cilck3").addEventListener("click", function () {
+        document.getElementById("text").innerHTML = "<b>innerHTML 완료</b>";
+    });
+
+
+
+    const addBtn = document.getElementById("addbtn");
+    const container = document.getElementById("container");
+
+    addBtn.addEventListener("click", function () {
+        const newDiv = document.createElement("div");
+        newDiv.textContent = "요소 추가";
+        container.appendChild(newDiv);
     });
     
 </script>
