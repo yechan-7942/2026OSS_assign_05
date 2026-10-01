@@ -20,11 +20,14 @@
     </style>
 
     <script>
+
+        function hello(){
+            alert("hello world");
+        }
         window.addEventListener("load", function () {
             const btn1 = document.querySelector("#btn1");
-            btn1.addEventListener("click", function () {
-                alert("hello world");
-            })
+            btn1.addEventListener("click",hello);
+            
         });
     </script>
 
