@@ -90,8 +90,7 @@ chilk event 만들어보기
 -->
 <hr>    
 
-<button onclick=" alert('hello wordl!')"> click me!</button>
-
+<button id = "btn1"> Click me!!</button>
 
 
 
@@ -131,5 +130,11 @@ chilk event 만들어보기
         newDiv.textContent = "요소 추가";
         container.appendChild(newDiv);
     });
+
+
+    const btn1 = document.querySelector("#btn1");
+    btn1.addEventListener("click", function(){
+        alert("hello world");
+    })
 
 </script>
