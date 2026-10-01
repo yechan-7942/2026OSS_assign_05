@@ -13,11 +13,21 @@
             background-color: antiquewhite;
         }
 
-        #Delete{
+        #Delete {
 
             background-color: red;
         }
     </style>
+
+    <script>
+        window.addEventListener("load", function () {
+            const btn1 = document.querySelector("#btn1");
+            btn1.addEventListener("click", function () {
+                alert("hello world");
+            })
+        });
+    </script>
+
 </head>
 
 <body>
@@ -75,28 +85,29 @@ chilk event 만들어보기
     <button id="Delete"> 삭제</button>
     <script>
         const item = document.getElementById("item2");
-        const button= document.getElementById("Delete");
+        const button = document.getElementById("Delete");
 
-        button.addEventListener("click",function(){
+        button.addEventListener("click", function () {
             item.remove();
         });
     </script>
 
 
 
-<!--
+    <!--
 10/1 수업
 
 -->
-<hr>    
+    <hr>
 
-<button id = "btn1"> Click me!!</button>
+    <button id="btn1"> Click me!!</button>
 
 
 
 
 
 </body>
+
 </html>
 
 <script>
@@ -132,9 +143,6 @@ chilk event 만들어보기
     });
 
 
-    const btn1 = document.querySelector("#btn1");
-    btn1.addEventListener("click", function(){
-        alert("hello world");
-    })
+
 
 </script>
