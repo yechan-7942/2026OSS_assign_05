@@ -39,8 +39,36 @@
     <p> </p>
     <div class="row">
         <label for="category">카테고리:</label>
-        <input type="text" id="category" required placeholder="상품의 카테고리를 입력하시오">
+        <select id="category" required>
+            <option value=""> -- 선택 --</option>
+            <option value="">과자</option>
+            <option value="">아이스크림</option>
+            <option value="">음료</option>
+            <option value=""> 과일</option>
+
+
+        </select>
     </div>
+
+    <div>
+        <button id="addBtn"> 저장</button>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>이름</th>
+                <th>수량</th>
+                <th>가격</th>
+                <th>유통기한</th>
+                <th>카테고리</th>
+
+            </tr>
+        </thead>
+        <tbody id="List"></tbody>
+    </table>
+
     </div>
 </body>
 
