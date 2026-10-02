@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS_dynamic</title>
+    <script>
+        window.onload = function () {
+            let input = document.getElementById("text");
+            let addBtn = document.querySelector("#addBtn");
+            let list = document.getElementById("list");
+
+            addBtn.addEventListener("click", function () {
+                // 항목 만들기
+                let li = document.createElement("li");
+                li.innerText = input.value;
+
+                // 삭제 버튼 만들기
+                let delBtn = document.createElement("button");
+                delBtn.innerText = "삭제";
+                delBtn.addEventListener("click", function () {
+                    li.remove();
+                });
+
+                li.appendChild(delBtn);
+                list.appendChild(li);
+
+                // 입력창 비우기
+                input.value = "";
+            });
+        };
+    </script>
+</head>
+<body>
+    <div>
+        <input type="text" id="text">
+        <button id="addBtn">추가</button>
+    </div>
+
+    <ul id="list"></ul>
+</body>
+</html>
