@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Management</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #f2f4f7;
+            margin: 0;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        /* Form */
+        .form-row {
+            margin-bottom: 12px;
+        }
+
+        .form-row label {
+            display: inline-block;
+            width: 80px;
+            font-weight: bold;
+        }
+
+        .form-row input,
+        .form-row select {
+            width: 300px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .form-row input:focus,
+        .form-row select:focus {
+            border-color: #4a7dff;
+            outline: none;
+        }
+
+        .form-button {
+            text-align: right;
+        }
+
+        /* Button */
+        button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            color: white;
+        }
+
+        #addBtn {
+            background-color: #4a7dff;
+        }
+
+        #addBtn:hover {
+            background-color: #2f5fd6;
+        }
+
+        .edit-btn {
+            background-color: #28a745;
+            padding: 5px 10px;
+        }
+
+        .edit-btn:hover {
+            background-color: #1e7e34;
+        }
+
+        .delete-btn {
+            background-color: #dc3545;
+            padding: 5px 10px;
+            margin-left: 5px;
+        }
+
+        .delete-btn:hover {
+            background-color: #b02a37;
+        }
+
+        hr {
+            margin: 25px 0;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4a7dff;
+            color: white;
+        }
+
+        tbody tr:hover {
+            background-color: #f0f5ff;
+        }
+    </style>
+    <script>
+        // STEP 3. 초기 데이터
+        let books = [
+            { id: 1, title: "HTML", author: "Kim", category: "Web", price: 10000 },
+            { id: 2, title: "CSS", author: "Lee", category: "Web", price: 12000 },
+            { id: 3, title: "JavaScript", author: "Park", category: "Web", price: 15000 }
+        ];
+
+        let nextId = 4;       // 다음에 추가될 책의 ID
+        let editIndex = -1;   // -1이면 추가 모드, 그 외에는 수정 중인 책의 위치
+
+        // STEP 6. Read - Array 내용을 화면에 출력
+        function render() {
+            let list = document.getElementById("bookList");
+            list.innerHTML = "";   // 기존 목록 비우기
+
+            for (let i = 0; i < books.length; i++) {
+                let book = books[i];
+                let tr = document.createElement("tr");
+
+                let tdId = document.createElement("td");
+                tdId.innerText = book.id;
+
+                let tdTitle = document.createElement("td");
+                tdTitle.innerText = book.title;
+
+                let tdAuthor = document.createElement("td");
+                tdAuthor.innerText = book.author;
+
+                let tdCategory = document.createElement("td");
+                tdCategory.innerText = book.category;
+
+                let tdPrice = document.createElement("td");
+                tdPrice.innerText = book.price;
+
+                // 수정, 삭제 버튼
+                let tdButton = document.createElement("td");
+
+                let editBtn = document.createElement("button");
+                editBtn.innerText = "수정";
+                editBtn.className = "edit-btn";
+                editBtn.addEventListener("click", function () {
+                    editBook(i);
+                });
+
+                let deleteBtn = document.createElement("button");
+                deleteBtn.innerText = "삭제";
+                deleteBtn.className = "delete-btn";
+                deleteBtn.addEventListener("click", function () {
+                    deleteBook(i);
+                });
+
+                tdButton.appendChild(editBtn);
+                tdButton.appendChild(deleteBtn);
+
+                tr.appendChild(tdId);
+                tr.appendChild(tdTitle);
+                tr.appendChild(tdAuthor);
+                tr.appendChild(tdCategory);
+                tr.appendChild(tdPrice);
+                tr.appendChild(tdButton);
+
+                list.appendChild(tr);
+            }
+        }
+
+        // STEP 9. Validation - 올바르면 true, 아니면 false
+        function validate() {
+            let title = document.getElementById("title");
+            let author = document.getElementById("author");
+            let category = document.getElementById("category");
+            let price = document.getElementById("price");
+
+            // 1. 필수 입력값 확인
+            if (title.value.trim() === "") {
+                alert("도서명을 입력하세요.");
+                title.focus();
+                return false;
+            }
+
+            // 2. 문자열 길이 확인
+            if (title.value.trim().length > 30) {
+                alert("도서명은 30자 이하로 입력하세요.");
+                title.focus();
+                return false;
+            }
+
+            if (author.value.trim() === "") {
+                alert("저자를 입력하세요.");
+                author.focus();
+                return false;
+            }
+
+            // 3. Select 선택 여부 확인
+            if (category.value === "") {
+                alert("카테고리를 선택하세요.");
+                category.focus();
+                return false;
+            }
+
+            // 4. 숫자 범위 확인
+            if (price.value === "" || Number(price.value) < 1 || Number(price.value) > 1000000) {
+                alert("가격은 1원 이상 1,000,000원 이하로 입력하세요.");
+                price.focus();
+                return false;
+            }
+
+            return true;
+        }
+
+        // Form 입력값 초기화
+        function clearForm() {
+            document.getElementById("title").value = "";
+            document.getElementById("author").value = "";
+            document.getElementById("category").value = "";
+            document.getElementById("price").value = "";
+        }
+
+        // STEP 5. Create / STEP 7. Update 저장
+        function saveBook() {
+            if (validate() === false) {
+                return;   // 잘못된 입력은 추가하지 않음
+            }
+
+            let title = document.getElementById("title").value.trim();
+            let author = document.getElementById("author").value.trim();
+            let category = document.getElementById("category").value;
+            let price = Number(document.getElementById("price").value);
+
+            if (editIndex === -1) {
+                // 추가
+                books.push({
+                    id: nextId,
+                    title: title,
+                    author: author,
+                    category: category,
+                    price: price
+                });
+                nextId++;
+            } else {
+                // 수정
+                books[editIndex].title = title;
+                books[editIndex].author = author;
+                books[editIndex].category = category;
+                books[editIndex].price = price;
+
+                editIndex = -1;
+                document.getElementById("addBtn").innerText = "Add";
+            }
+
+            clearForm();
+            render();
+        }
+
+        // STEP 7. Update - 기존 데이터를 Form에 표시
+        function editBook(index) {
+            let book = books[index];
+
+            document.getElementById("title").value = book.title;
+            document.getElementById("author").value = book.author;
+            document.getElementById("category").value = book.category;
+            document.getElementById("price").value = book.price;
+
+            editIndex = index;
+            document.getElementById("addBtn").innerText = "저장";
+        }
+
+        // STEP 8. Delete
+        function deleteBook(index) {
+            if (confirm("삭제하시겠습니까?")) {
+                books.splice(index, 1);   // Array에서 삭제
+
+                // 수정 중이던 책을 지운 경우 Form 초기화
+                if (editIndex === index) {
+                    editIndex = -1;
+                    clearForm();
+                    document.getElementById("addBtn").innerText = "Add";
+                } else if (editIndex > index) {
+                    editIndex--;   // 앞쪽 책이 지워지면 위치가 한 칸 당겨짐
+                }
+
+                render();
+            }
+        }
+
+        window.onload = function () {
+            document.getElementById("addBtn").addEventListener("click", saveBook);
+            render();   // 페이지 최초 실행 시 초기 데이터 출력
+        };
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Book Management</h1>
+
+        <div class="form-row">
+            <label for="title">제목</label>
+            <input type="text" id="title" required>
+        </div>
+        <div class="form-row">
+            <label for="author">저자</label>
+            <input type="text" id="author" required>
+        </div>
+        <div class="form-row">
+            <label for="category">카테고리</label>
+            <select id="category" required>
+                <option value="">-- 선택 --</option>
+                <option value="Web">Web</option>
+                <option value="Programming">Programming</option>
+                <option value="Database">Database</option>
+                <option value="AI">AI</option>
+            </select>
+        </div>
+        <div class="form-row">
+            <label for="price">가격</label>
+            <input type="number" id="price" min="1" required>
+        </div>
+
+        <div class="form-button">
+            <button id="addBtn">Add</button>
+        </div>
+
+        <hr>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>제목</th>
+                    <th>저자</th>
+                    <th>카테고리</th>
+                    <th>가격</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="bookList"></tbody>
+        </table>
+    </div>
+</body>
+</html>
