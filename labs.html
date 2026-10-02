@@ -36,6 +36,7 @@
 <body>
     <!--
     덧셈 계산기 만들어보기-->
+    <h2> 계산기 </h2>
     <input type="text" id="num1" size="5">
     <button> +</button>
     <input type="text" id="num2" size="5">
@@ -67,8 +68,9 @@ chilk event 만들어보기
     <!--
 동적 요소 추가-->
 
-    <h3> 동적요소 추가</h3>
-    <button id="addbtn">동적 요소 추가</button>
+    <h3> 과일추가</h3>
+    <input type="text" id="fruitInput" placeholder="과일 이름">
+    <button id="addbtn">과일 추가 </button>
     <div id="container"></div>
 
 
@@ -140,9 +142,14 @@ chilk event 만들어보기
     const container = document.getElementById("container");
 
     addBtn.addEventListener("click", function () {
+        const input = document.getElementById("fruitInput");
+        const fruit = input.value.trim();
+        if (!fruit) return;
         const newDiv = document.createElement("div");
-        newDiv.textContent = "요소 추가";
+        newDiv.textContent = fruit;
         container.appendChild(newDiv);
+        input.value = "";
+        input.focus();
     });
 
 
