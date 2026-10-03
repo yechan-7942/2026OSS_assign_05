@@ -19,7 +19,7 @@
 
         function render() {
             let list = document.getElementById("List");
-            list.innerHTML = ""; 
+            list.innerHTML = "";
 
             for (let i = 0; i < foods.length; i++) {
                 let food = foods[i];
@@ -54,14 +54,23 @@
                 let editBtn = document.createElement("button");
                 editBtn.innerText = "수정";
                 editBtn.className = "edit_btn";
-                editBtn.addEventListener("click", function(){
+                editBtn.addEventListener("click", function () {
                     editProduct(i);
                 });
 
-                
+                let deleteBtn = document.createElement("button");
+                deleteBtn.innerText = "삭제";
+                deleteBtn.className = "delete_btn";
+                deleteBtn.addEventListener("click", function () {
+                    deleteProduct(i);
+                });
+
+
 
                 tdButton.appendChild(editBtn);
                 tr.appendChild(tdButton);
+                tdButton.appendChild(deleteBtn);
+
 
                 list.appendChild(tr);
             }
@@ -78,11 +87,18 @@
         }
 
 
-       
+        function deleteProduct(index) {
+            if (confirm("삭제하시겠습니까?")) {
+                foods.splice(index, 1);
+                render();
+            }
+        }
+
+
 
 
         window.onload = function () {
-            render(); 
+            render();
         };
 
 
