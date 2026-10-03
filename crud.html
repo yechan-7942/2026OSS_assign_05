@@ -14,6 +14,50 @@
             { id: 3, product: "콜라", count: 4, price: 2000, day: "2027-06-30", category: "음료" }
         ];
 
+        let nextId = 4; 
+
+
+        function render() {
+            let list = document.getElementById("List");
+            list.innerHTML = ""; 
+
+            for (let i = 0; i < foods.length; i++) {
+                let food = foods[i];
+                let tr = document.createElement("tr");
+
+                let tdId = document.createElement("td");
+                tdId.innerText = food.id;
+                tr.appendChild(tdId);
+
+                let tdProduct = document.createElement("td");
+                tdProduct.innerText = food.product;
+                tr.appendChild(tdProduct);
+
+                let tdCount = document.createElement("td");
+                tdCount.innerText = food.count;
+                tr.appendChild(tdCount);
+
+                let tdPrice = document.createElement("td");
+                tdPrice.innerText = food.price;
+                tr.appendChild(tdPrice);
+
+                let tdDay = document.createElement("td");
+                tdDay.innerText = food.day;
+                tr.appendChild(tdDay);
+
+                let tdCategory = document.createElement("td");
+                tdCategory.innerText = food.category;
+                tr.appendChild(tdCategory);
+
+                list.appendChild(tr);
+            }
+        }
+
+
+        window.onload = function () {
+            render(); 
+        };
+
         
     </script>
 </head>
