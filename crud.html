@@ -5,7 +5,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>식품 관리 프로그램</title>
+
+
+    <script>
+        let foods = [
+            { id: 1, product: "새우깡", count: 10, price: 1500, day: "2026-12-31", category: "과자" },
+            { id: 2, product: "메로나", count: 8, price: 1000, day: "2027-03-01", category: "아이스크림" },
+            { id: 3, product: "콜라", count: 4, price: 2000, day: "2027-06-30", category: "음료" }
+        ];
+
+        
+    </script>
 </head>
+
+
+
+
 
 
 
@@ -41,10 +56,10 @@
         <label for="category">카테고리:</label>
         <select id="category" required>
             <option value=""> -- 선택 --</option>
-            <option value="">과자</option>
-            <option value="">아이스크림</option>
-            <option value="">음료</option>
-            <option value=""> 과일</option>
+            <option value="과자">과자</option>
+            <option value="아이스크림">아이스크림</option>
+            <option value="음료">음료</option>
+            <option value="과일"> 과일</option>
 
 
         </select>
