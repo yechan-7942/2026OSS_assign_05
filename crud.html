@@ -15,6 +15,7 @@
         ];
 
         let nextId = 4;
+        let editIndex = -1;
 
 
         function render() {
@@ -84,6 +85,7 @@
             document.getElementById("price").value = food.price;
             document.getElementById("day").value = food.day;
             document.getElementById("category").value = food.category;
+            editIndex = index;
         }
 
 
@@ -120,7 +122,40 @@
         }
 
 
+        function saveProduct() {
+            if (validate() === false) {
+                return;
+            }
+            let product = document.getElementById("product").value;
+            let count = document.getElementById("count").value;
+            let price = document.getElementById("price").value;
+            let day = document.getElementById("day").value;
+            let category = document.getElementById("category").value;
+
+            if (editIndex === -1) {
+                foods.push({ id: nextId, product: product, count: count, price: price, day: day, category: category });
+                nextId++;
+            } else {
+                foods[editIndex].product = product;
+                foods[editIndex].count = count;
+                foods[editIndex].price = price;
+                foods[editIndex].day = day;
+                foods[editIndex].category = category;
+                editIndex = -1;
+            }
+
+            document.getElementById("product").value = "";
+            document.getElementById("count").value = "";
+            document.getElementById("price").value = "";
+            document.getElementById("day").value = "";
+            document.getElementById("category").value = "";
+
+            render();
+        }
+
+
         window.onload = function () {
+            document.getElementById("addBtn").addEventListener("click", saveProduct);
             render();
         };
 
