@@ -14,7 +14,7 @@
             { id: 3, product: "콜라", count: 4, price: 2000, day: "2027-06-30", category: "음료" }
         ];
 
-        let nextId = 4; 
+        let nextId = 4;
 
 
         function render() {
@@ -49,16 +49,43 @@
                 tdCategory.innerText = food.category;
                 tr.appendChild(tdCategory);
 
+                let tdButton = document.createElement("td");
+
+                let editBtn = document.createElement("button");
+                editBtn.innerText = "수정";
+                editBtn.className = "edit_btn";
+                editBtn.addEventListener("click", function(){
+                    editProduct(i);
+                });
+
+                
+
+                tdButton.appendChild(editBtn);
+                tr.appendChild(tdButton);
+
                 list.appendChild(tr);
             }
         }
+
+
+        function editProduct(index) {
+            let food = foods[index];
+            document.getElementById("product").value = food.product;
+            document.getElementById("count").value = food.count;
+            document.getElementById("price").value = food.price;
+            document.getElementById("day").value = food.day;
+            document.getElementById("category").value = food.category;
+        }
+
+
+       
 
 
         window.onload = function () {
             render(); 
         };
 
-        
+
     </script>
 </head>
 
